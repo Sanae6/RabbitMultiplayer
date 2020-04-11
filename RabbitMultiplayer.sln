@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMultiplayer", "RabbitMultiplayer\RabbitMultiplayer.csproj", "{644C528B-4458-4AA8-8804-BBA0712395F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitServer", "RabbitServer\RabbitServer.csproj", "{ADE8B5A5-5F09-4810-95CE-908BBD12997B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{644C528B-4458-4AA8-8804-BBA0712395F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{644C528B-4458-4AA8-8804-BBA0712395F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{644C528B-4458-4AA8-8804-BBA0712395F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{644C528B-4458-4AA8-8804-BBA0712395F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADE8B5A5-5F09-4810-95CE-908BBD12997B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADE8B5A5-5F09-4810-95CE-908BBD12997B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADE8B5A5-5F09-4810-95CE-908BBD12997B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADE8B5A5-5F09-4810-95CE-908BBD12997B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
