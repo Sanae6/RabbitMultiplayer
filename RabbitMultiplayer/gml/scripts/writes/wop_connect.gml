@@ -1,3 +1,3 @@
-﻿var buffer = setup_buffer();
-buffer_write(buffer,buffer_string,argument0);
-send_message(0,buffer);
+﻿var b = setup_buffer();
+buffer_write(b,buffer_u16,version);
+send_message(0,b);

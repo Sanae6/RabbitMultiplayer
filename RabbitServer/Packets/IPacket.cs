@@ -12,12 +12,12 @@ namespace RabbitServer.Packets
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(this.GetType().Name + "(");
-            var fields = GetType().GetFields();
-            for (var i = 0; i < fields.Length; i++)
+            var props = GetType().GetProperties();
+            for (var i = 0; i < props.Length; i++)
             {
-                var field = fields[i];
-                builder.Append(field.Name).Append(" = ").Append(field.GetValue(this));
-                if (i != fields.Length - 1) builder.Append(", ");
+                var prop = props[i];
+                builder.Append(prop.Name).Append(" = ").Append(prop.GetValue(this));
+                if (i != props.Length - 1) builder.Append(", ");
             }
             builder.Append(")");
 

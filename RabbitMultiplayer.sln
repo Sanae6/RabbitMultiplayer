@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMultiplayer", "Rabbit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitServer", "RabbitServer\RabbitServer.csproj", "{ADE8B5A5-5F09-4810-95CE-908BBD12997B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDiff", "C:\Users\Sanae\RiderProjects\NetDiff\NetDiff\NetDiff.csproj", "{00A6267D-DDE3-42CC-9C99-9166C334053E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{ADE8B5A5-5F09-4810-95CE-908BBD12997B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADE8B5A5-5F09-4810-95CE-908BBD12997B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADE8B5A5-5F09-4810-95CE-908BBD12997B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A6267D-DDE3-42CC-9C99-9166C334053E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A6267D-DDE3-42CC-9C99-9166C334053E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00A6267D-DDE3-42CC-9C99-9166C334053E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00A6267D-DDE3-42CC-9C99-9166C334053E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

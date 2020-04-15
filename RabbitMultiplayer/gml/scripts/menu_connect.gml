@@ -1,13 +1,19 @@
 ﻿with(global._net){
-    //if (!variable_instance_exists(global.,"url") || !variable_instance_exists(self,"port") || name == ""){
-    //    updatetextpop("Enter the IP, port, and your username.",0xff0000,6,0);
-    //    exit;
-    //
-    }
-    if (alreadyStarting) {
-        updatetextpop("Already connecting...",0xadd8e6,12,0);
+    if (url == "" || port == "" || username == ""){
+        updatetextpop("Enter the IP, port, and your username.",0xff0000,6,0);
         exit;
     }
-    network_connect_raw(socket,url,port);
-    updatetextpop("Connecting...",0xadd8e6,12,0);
+    if (alreadyStarting) {
+        if (connected){
+            wop_disconnect("Attempting to reconnect");
+            network_destroy(socket);
+            connected = false;
+        }
+        network_destroy(socket);
+        updatetextpop("Reattempting a connection...",0xadd8e6,12,0);
+        socket = network_create_socket(network_socket_tcp);
+    }
+    network_connect_raw(socket,url,real(port));
+    //if (!alreadyStarting)updatetextpop("Connecting...",0xadd8e6,12,0);
+    alreadyStarting = true;
 }

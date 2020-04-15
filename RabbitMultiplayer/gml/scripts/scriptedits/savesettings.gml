@@ -1,4 +1,5 @@
 ﻿with (global._net){
-    var nets = ds_map_create();
-    nets[?
+    ds_map_add(_map, "username",username);
+    ds_map_add(_map, "lasturl",url);
+    ds_map_add(_map, "lastport",port);
 }

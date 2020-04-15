@@ -10,7 +10,7 @@ namespace RabbitServer.Packets
         public int PacketLength { get; }
         public byte PacketId { get; }
 
-        public PacketBinaryReader(int size,Stream input) : base(new BufferedStream(input),Encoding.Unicode,true)
+        public PacketBinaryReader(int size,Stream input) : base(new BufferedStream(input),Encoding.ASCII,true)
         {
             PacketLength = ReadInt16();
             PacketId = ReadByte();
@@ -23,13 +23,13 @@ namespace RabbitServer.Packets
         public override string ReadString()
         {
             string str = "";
-            char c;
-            do
+            char c = '1';
+            while (c != '\x00')
             {
                 c = ReadChar();
                 str += c;
-            } while (c != '\x00');
-
+            } ;
+            Console.WriteLine(str);
             return str;
         }
     }
@@ -38,7 +38,7 @@ namespace RabbitServer.Packets
     {
         private byte PacketId;
 
-        public PacketBinaryWriter(byte packet) : base(new MemoryStream(256), Encoding.Unicode, true)
+        public PacketBinaryWriter(byte packet) : base(new MemoryStream(256), Encoding.ASCII, true)
         {
             PacketId = packet;
             Seek(3, SeekOrigin.Begin);
@@ -60,8 +60,11 @@ namespace RabbitServer.Packets
         }
         public override void Write(string str)
         {
-            Write(Encoding.Unicode.GetBytes(str));
-            
+            foreach (char c in str)
+            {
+                Write(c);
+            }
+            Write(0);
         }
     }
 }

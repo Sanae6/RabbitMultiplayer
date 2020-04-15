@@ -69,13 +69,14 @@ namespace RabbitServer
             var client = _listener.EndAcceptTcpClient(ar);
             TcpClientConnected.Set();
             var ci = new ClientInstance(client);
-            //GameLogic.CallEvent("joined",ci.InstanceId);
+            CancellationTokenSource source = ci.tokensrc = new CancellationTokenSource();
+            logic.UserJoined(ci);
             
             WriteQueues.Add(ci.InstanceId, new BlockingCollection<IPacket>());
             try
             {
                 Read(ci);
-                Task.Run(() => WriteAction(ci));
+                ci.writeTask = Task.Run(() => WriteAction(ci),source.Token);
             }
             catch (StackOverflowException e)
             {
@@ -85,9 +86,11 @@ namespace RabbitServer
 
         private void WriteAction(ClientInstance client)
         {
-            while (client.client.Connected)
+            var bq = WriteQueues[client.InstanceId];
+            while (client.client.Connected && client.tokensrc.IsCancellationRequested)
             {
-                var packet = WriteQueues[client.InstanceId].Take();
+                IPacket packet;
+                if (!bq.TryTake(out packet)) break;
                 byte packetId = _packetTypes.First(x => x.Value == packet.GetType()).Key;
                 var writer = new PacketBinaryWriter(packetId);
                 if (!client.client.Connected) return;
@@ -95,13 +98,16 @@ namespace RabbitServer
                 writer.AddBeginningBytes();
                 var ma = ((MemoryStream) writer.BaseStream).ToArray();
                 client.client.GetStream().Write(ma,0,ma.Length);
-                //writer.Close();
+                writer.Close();
                 if (packetId == 0x01)
                 {
                     client.client.Close();
                     client.client.Dispose();
+                    break;
                 }
             }
+            if (WriteQueues[client.InstanceId] == bq)WriteQueues.Remove(client.InstanceId);
+            //Console.WriteLine(client.InstanceId+"'s write queue has been cleaned up");
         }
 
         private void Read(ClientInstance client)
@@ -122,6 +128,9 @@ namespace RabbitServer
                     int read = stream.EndRead(ar);
                     if (read == 0 || !o.client.client.Connected)
                     {
+                        o.client.tokensrc.Cancel();
+                        //WriteQueues[o.client.InstanceId].CompleteAdding();
+                        logic.UserLeft(o.client);
                         stream.Close();
                         o.client.client.Close();
                         return;
@@ -145,7 +154,6 @@ namespace RabbitServer
                     Console.Error.WriteLine(e.ToString());
                 }
             }
-            else return;
             Read(o?.client);
         }
 
@@ -167,6 +175,8 @@ namespace RabbitServer
             private static int nextInstance = 1;
             public int InstanceId { get; private set; }
             public TcpClient client;
+            internal Task writeTask;
+            public CancellationTokenSource tokensrc;
 
             public ClientInstance(TcpClient client)
             {
